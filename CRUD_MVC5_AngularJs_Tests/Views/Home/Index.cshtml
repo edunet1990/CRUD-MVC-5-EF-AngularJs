@@ -1,0 +1,141 @@
+﻿<div class="container" ng-controller="funcionarioCTRL">
+    <div class="panel panel-info">
+        <div class="panel-heading">Listagem de Funcionários - CRUD</div>
+
+        <div class="panel-body">
+            <button type="button" class="btn btn-info" data-target="#AdicionarFuncionario" data-toggle="modal">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
+        <table class="table table-bordered">
+            <thead style="background-color: burlywood;">
+                <tr>
+                    <th>Id Funcionário</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Departamento</th>
+                    <th>Cargo</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="func in Funcionarios">
+                    <td>{{func.FuncionarioId}}</td>
+                    <td>{{func.Nome}}</td>
+                    <td>{{func.Email}}</td>
+                    <td>{{func.Departamento}}</td>
+                    <td>{{func.Cargo}}</td>
+                    <td style="width: 200px">
+                        <a href="#" data-target="#AtualizarFuncionario" data-toggle="modal" class="btn btn-success" ng-click="atualizarFuncionarioPorId(func)"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="#" data-target="#ExcluirFuncionario" data-toggle="modal" class="btn btn-danger" ng-click="excluirFuncionarioPorId(func)"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        @* INÍCIO MODAL - ADICIONAR FUNCIONÁRIO *@
+        <div class="modal" id="AdicionarFuncionario" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-info">Adicionar Funcionário</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" name="AdicionarNovoFuncionarioForm">
+                            <div class="form-group">
+                                <input class="form-control" readonly="readonly" name="funcionarioId" type="hidden" placeholder="Id Funcionario" />
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control" name="nome" ng-model="nome" type="text" placeholder="Nome Funcionário" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="nome" ng-model="email" type="text" placeholder="E-mail" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="nome" ng-model="departamento" type="text" placeholder="Departamento" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="nome" ng-model="cargo" type="text" placeholder="Cargo" />
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnSalvar" data-dismiss="modal" ng-click="adicionarFuncionario()">Adicionar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="limparDados()">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* FIM MODAL - ADICIONAR FUNCIONÁRIO *@
+
+
+        @* INÍCIO MODAL - ATUALIZAR FUNCIONÁRIO *@
+        <div class="modal" id="AtualizarFuncionario" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-warning">Atualizar Funcionário</h3>
+                    </div>
+                    <div class="modal-body" style="margin-left: 20px">
+                        <form class="form-horizontal" name="AtualizarForm">
+                            <div class="form-group">
+                                <input class="form-control" readonly="readonly" name="FuncionarioId" ng-model="AtualizadoFuncionarioId" type="hidden" placeholder="Funcionário Id" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="Nome" ng-model="AtualizadoNome" placeholder="Nome Funcionário" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="Email" ng-model="AtualizadoEmail" placeholder="Email" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="Departamento" ng-model="AtualizadoDepartamento" placeholder="Departamento" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="Cargo" ng-model="AtualizadoCargo" placeholder="Cargo" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnAtualizar" data-dismiss="modal" ng-click="atualizarFuncionario()">Atualizar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* FIM MODAL - ATUALIZAR FUNCIONÁRIO *@
+
+        @* INICIO MODAL - EXCLUIR FUNCIONÁRIO *@
+            <div class="modal" role="dialog" id="ExcluirFuncionario">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="text-info">Você tem certeza de que deseja exluir o funcionário(a)?</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <p>Id do Funcionário: {{AtualizadoFuncionarioId}}</p>
+                                <p>Nome do Funcionário: {{AtualizadoNome}}</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="excluirFuncionario(AtualizadoFuncionarioId)">Exluir</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @* FIM MODAL - EXLUIR FUNCIONÁRIO *@
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/AngularJsApp/Module.js"></script>
+    <script src="~/AngularJsApp/Service.js"></script>
+    <script src="~/AngularJsApp/Controller.js"></script>
+}
